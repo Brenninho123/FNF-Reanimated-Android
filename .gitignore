@@ -23,8 +23,3 @@ vs_Community.exe
 !.vscode/extensions.json
 art/build_html.bat
 art/build_html-debug.bat
-art/flashFiles/PsychGF2.fla
-art/flashFiles/TorchsFiles/RECOVER_*
-debug.log
-assets/shared/characters/nene.json
-assets/shared/images/characters/nene.xml

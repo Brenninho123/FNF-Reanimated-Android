@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin' Reanimated" file="Reanimated" packageName="com.shadowmario.psychengine" package="com.shadowmario.psychengine" main="Main" version="0.2.8" company="ShadowMario" />
+	<app title="MADNESS INCIDENT 0201A" file="MADNESS" packageName="com.coolpeople.madness" package="com.coolpeople.madness" main="Main" version="0.2.8" company="dataLand" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -21,16 +21,11 @@
 	<!-- ______________________ PSYCH ENGINE CUSTOMIZATION ______________________ -->
 
 	<define name="MODS_ALLOWED" if="desktop" />
-	<define name="HSCRIPT_ALLOWED" if="desktop" />
+	<define name="HSCRIPT_ALLOWED" if="android" />
 	<define name="LUA_ALLOWED" if="desktop" />
-	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="DISCORD_ALLOWED" />
-	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
-	<define name="VIDEOS_ALLOWED" if="windows || linux || android" unless="32bits"/> <!-- IF YOU WANT TO USE VIDEOS ON YOUR SOURCE MOD, GET THIS LINE OUTSIDE OF THE SECTION -->
-
-	<section if="officialBuild">
-		<define name="TITLE_SCREEN_EASTER_EGG"/>
-	</section>
+	<!-- <define name="ACHIEVEMENTS_ALLOWED" /> -->
+	<define name="DISCORD_ALLOWED" if="desktop"/>
+	<define name="VIDEOS_ALLOWED" if="desktop || android"/>
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
@@ -60,33 +55,28 @@
 	<!-- __________________________ Game Assets & Etc. __________________________ -->
 	
 	<!-- Turn on Crash Handler -->
-	<define name="CRASH_HANDLER" if="desktop release" />
+	<define name="CRASH_HANDLER" if="desktop release || mobile" />
 
 	<!-- Assets -->
+	<!-- os fantasmas da minha voz -->
+	<assets path="mobile" rename="assets/mobile" if="mobile"/>
 	<assets path="assets/fonts" />
 	<assets path="assets/shared"        exclude="*.ogg" if="web"/>
 	<assets path="assets/shared"        exclude="*.mp3" unless="web"/>
-	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
+	<assets path="assets/videos"        if="VIDEOS_ALLOWED"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
 	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.mp3" unless="web"/>
-	<assets path="assets/torchs_assets" library="torchs_assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/torchs_assets" library="torchs_assets" exclude="*.mp3" unless="web"/>
-	<section if="TITLE_SCREEN_EASTER_EGG">
-		<assets path="assets/secrets" rename="assets/shared" exclude="*.ogg" if="web"/>
-		<assets path="assets/secrets" rename="assets/shared" exclude="*.mp3"  unless="web"/>
-	</section>
 
 	<library name="videos"        preload="true" if="VIDEOS_ALLOWED"/>
 	<library name="songs"         preload="true" />
 	<library name="week_assets"   preload="true" />
-	<library name="torchs_assets" preload="true" />
 
 	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
 
 	<section if="MODS_ALLOWED">
-		<assets path='example_mods' rename='mods' embed='false'/>
+		<!-- <assets path='example_mods' rename='mods' embed='false'/> -->
 	</section>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
 
@@ -96,17 +86,15 @@
 	<haxelib name="flixel-ui" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="tjson" />
-	<haxelib name="funkin.vis" />
-	<haxelib name="grig.audio" />
 
 	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
-	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/>
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate"/>
-	
+	<haxelib name="extension-androidtools" if="android"/>
+
 	<!-- Disable Discord IO Thread -->
 	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
 	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
@@ -114,9 +102,6 @@
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
 	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
-
-	<!--Torchs Library-->
-	<haxelib name="torchsfunctions"/>
 	
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
@@ -165,9 +150,17 @@
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
 
+	   <config:android gradle-version="7.5.1" />
+        <config:android gradle-plugin="7.3.1" />
+	<android permission="android.permission.CAPTURE_AUDIO_OUTPUT"/>
+	<android target-sdk-version="29" if="android"/>
+	<android min-sdk-version="19" if="android"/>
+
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+
+	<assets path='art/alsoft.ini' rename='alsoft.ini'/>
 
 	<assets path='art/iconOG.png' rename='icon.png' if="linux" />
 	
